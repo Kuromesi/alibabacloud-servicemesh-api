@@ -5,7 +5,7 @@ location: https://istio.io/docs/reference/config/istio.mesh.v1alpha1.html
 layout: protoc-gen-docs
 generator: protoc-gen-docs
 weight: 20
-number_of_entries: 76
+number_of_entries: 79
 ---
 <p>Configuration affecting the service mesh as a whole.</p>
 
@@ -1053,6 +1053,17 @@ No
 <td><code><a href="#MeshConfig-ExtensionProvider-EnvoyOpenTelemetryLogProvider">EnvoyOpenTelemetryLogProvider (oneof)</a></code></td>
 <td>
 <p>Configures an Envoy Open Telemetry Access Logging Service provider.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="MeshConfig-ExtensionProvider-aggregate" class="oneof">
+<td><code>aggregate</code></td>
+<td><code><a href="#MeshConfig-ExtensionProvider-AggregateProvider">AggregateProvider (oneof)</a></code></td>
+<td>
+<p>Configures aggregate provider</p>
 
 </td>
 <td>
@@ -2650,6 +2661,62 @@ No
 </tbody>
 </table>
 </section>
+<h2 id="MeshConfig-ExtensionProvider-AggregateProvider">MeshConfig.ExtensionProvider.AggregateProvider</h2>
+<section>
+<p>The following example configures zipkin-intranet provider for cluster-a, and cluster-c
+opentelemetry provider for cluster-b, zipkin provider for the rest.</p>
+<pre><code class="language-yaml">aggregate:
+  defaultProvider:
+    name: zipkin
+  uniqueProviders:
+  - provider:
+      name: zipkin-intranet
+    clusters:
+    - id: cluster-a
+    - id: cluster-c
+  - provider:
+      name: opentelemetry
+    clusters:
+    - id: cluster-b
+    - id: cluster-c
+</code></pre>
+<p>NOTE: If a cluster refered different providers, the first provider refered will be used.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="MeshConfig-ExtensionProvider-AggregateProvider-default_provider">
+<td><code>defaultProvider</code></td>
+<td><code><a href="https://istio.io/docs/reference/config/telemetry.html#ProviderRef">ProviderRef</a></code></td>
+<td>
+<p>REQUIRED. The default provider to use when no unique provider is matched.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="MeshConfig-ExtensionProvider-AggregateProvider-unique_providers">
+<td><code>uniqueProviders</code></td>
+<td><code><a href="#MeshConfig-ExtensionProvider-AggregateProvider-UniqueProviderRef">UniqueProviderRef[]</a></code></td>
+<td>
+<p>Optional. List of unique providers that override the default provider.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 <h2 id="MeshConfig-ExtensionProvider-StackdriverProvider-Logging">MeshConfig.ExtensionProvider.StackdriverProvider.Logging</h2>
 <section>
 <table class="message-fields">
@@ -2921,6 +2988,91 @@ The resource detector reads from the Dynatrace enrichment files
 and adds host/process related attributes to the OpenTelemetry resource.</p>
 <p>See: <a href="https://docs.dynatrace.com/docs/shortlink/enrichment-files">Enrich ingested data with Dynatrace-specific dimensions</a></p>
 
+</section>
+<h2 id="MeshConfig-ExtensionProvider-AggregateProvider-UniqueProviderRef">MeshConfig.ExtensionProvider.AggregateProvider.UniqueProviderRef</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="MeshConfig-ExtensionProvider-AggregateProvider-UniqueProviderRef-provider">
+<td><code>provider</code></td>
+<td><code><a href="https://istio.io/docs/reference/config/telemetry.html#ProviderRef">ProviderRef</a></code></td>
+<td>
+<p>REQUIRED. The unique provider to use when a proxy is matched.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="MeshConfig-ExtensionProvider-AggregateProvider-UniqueProviderRef-clusters">
+<td><code>clusters</code></td>
+<td><code><a href="#MeshConfig-ExtensionProvider-AggregateProvider-ClusterRef">ClusterRef[]</a></code></td>
+<td>
+<p>Optional. List of clusters that will use the provider.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="MeshConfig-ExtensionProvider-AggregateProvider-ClusterRef">MeshConfig.ExtensionProvider.AggregateProvider.ClusterRef</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="MeshConfig-ExtensionProvider-AggregateProvider-ClusterRef-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>REQUIRE. Id of the cluster, will be used as proxy selector.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="MeshConfig-ExtensionProvider-AggregateProvider-ClusterRef-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Optional. Name of the cluster, won&rsquo;t be used as selector currently, just for more readability.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="MeshConfig-ExtensionProvider-AggregateProvider-ClusterRef-region">
+<td><code>region</code></td>
+<td><code>string</code></td>
+<td>
+<p>Optional. Region of the cluster, won&rsquo;t be used as selector currently, just for more readability.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
 </section>
 <h2 id="k8s-io-apimachinery-pkg-apis-meta-v1-LabelSelector">k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector</h2>
 <section>
