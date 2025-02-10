@@ -7,6 +7,8 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20240513163218-0867130af1f8
 	google.golang.org/grpc v1.64.1
 	google.golang.org/protobuf v1.34.1
+	k8s.io/api v0.30.0
+	k8s.io/apiextensions-apiserver v0.22.2
 	k8s.io/apimachinery v0.30.0
 	k8s.io/code-generator v0.27.0
 )
@@ -25,7 +27,6 @@ require (
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/api v0.30.0 // indirect
 	k8s.io/gengo v0.0.0-20230829151522-9cce18d56c01 // indirect
 	k8s.io/gengo/v2 v2.0.0-20240228010128-51d4e06bde70 // indirect
 	k8s.io/kube-openapi v0.0.0-20240228011516-70dd3763d340 // indirect
