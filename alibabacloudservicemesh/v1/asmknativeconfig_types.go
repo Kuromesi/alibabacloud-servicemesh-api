@@ -151,3 +151,7 @@ func (r *ASMKnativeConfig) GetIstioGatewayService() string {
 	}
 	return gateway
 }
+
+func init() {
+	SchemeBuilder.Register(&ASMKnativeConfig{}, &ASMKnativeConfigList{})
+}

@@ -135,3 +135,7 @@ type ASMSecurityPolicyList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []ASMSecurityPolicy `json:"items"`
 }
+
+func init() {
+	SchemeBuilder.Register(&ASMSecurityPolicy{}, &ASMSecurityPolicyList{})
+}

@@ -89,3 +89,7 @@ type ASMPacketInspectorList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []ASMPacketInspector `json:"items"`
 }
+
+func init() {
+	SchemeBuilder.Register(&ASMPacketInspector{}, &ASMPacketInspectorList{})
+}

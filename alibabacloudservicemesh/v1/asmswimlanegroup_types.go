@@ -128,3 +128,7 @@ type ASMSwimLaneGroupList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []ASMSwimLaneGroup `json:"items"`
 }
+
+func init() {
+	SchemeBuilder.Register(&ASMSwimLaneGroup{}, &ASMSwimLaneGroupList{})
+}

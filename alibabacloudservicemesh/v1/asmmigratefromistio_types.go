@@ -48,3 +48,7 @@ type ASMMigrateFromIstioList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []ASMMigrateFromIstio `json:"items"`
 }
+
+func init() {
+	SchemeBuilder.Register(&ASMMigrateFromIstio{}, &ASMMigrateFromIstioList{})
+}
